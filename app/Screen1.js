@@ -1,5 +1,13 @@
 import React from 'react';
-import { StyleSheet, Button, View } from 'react-native';
+import { StyleSheet, Button, View,Image  } from 'react-native';
+import GridList from 'react-native-grid-list';
+
+const items = [
+  { thumbnail: { uri: 'https://lorempixel.com/200/200/animals' } },
+  { thumbnail: { uri: 'https://lorempixel.com/200/200/city' } },
+  { thumbnail: { uri: 'https://lorempixel.com/200/200/nature' } },
+  { thumbnail: { uri: 'https://lorempixel.com/200/200/cats' } },
+];
 
 export default class Screen1 extends React.Component {
   constructor(props) {
@@ -34,25 +42,41 @@ export default class Screen1 extends React.Component {
   static navigationOptions = {
     title: 'Screen1',
   };
+  renderItem = ({ item, index }) => (
+    <Image style={styles.image} source={item.thumbnail} />
+  );
 
   render() {
+
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Button
-          title="Go to Screen 2"
-          onPress={() => this.props.navigation.navigate('Screen2')
-          }
+        <GridList
+          showSeparator
+          data={items}
+          numColumns={3}
+          renderItem={this.renderItem}
         />
       </View>
+      // <View style={styles.container}>
+      //   <Button
+      //     title="Go to Screen 2"
+      //     onPress={() => this.props.navigation.navigate('Screen2')
+      //     }
+      //   />
+      // </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
   },
 });
